@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Finance — Kelola Keuanganmu dengan Cerdas</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- SheetJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<!-- ===================== LOADING SCREEN ===================== -->
+<div id="loading-screen" class="loading-screen">
+  <div class="loader-content">
+    <div class="loader-logo">
+      <span class="loader-icon">💰</span>
+    </div>
+    <h1 class="loader-title">Smart Finance</h1>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    <p class="loader-text">Memuat aplikasi...</p>
+  </div>
+</div>
+
+<!-- ===================== TOAST CONTAINER ===================== -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- ===================== LANDING PAGE ===================== -->
+<div id="page-landing" class="page active">
+  <nav class="landing-nav">
+    <div class="nav-brand">
+      <span class="brand-icon">💰</span>
+      <span class="brand-name">Smart Finance</span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-ghost" onclick="showPage('login')">Masuk</button>
+      <button class="btn btn-primary" onclick="showPage('register')">Daftar Gratis</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">✨ Aplikasi Keuangan #1 Indonesia</div>
+    <h1 class="hero-title">Kelola Keuangan<br /><span class="hero-accent">Lebih Cerdas</span></h1>
+    <p class="hero-subtitle">Catat pemasukan, pengeluaran, dan raih target tabunganmu dengan mudah. Semua dalam satu aplikasi yang elegan.</p>
+    <div class="hero-cta">
+      <button class="btn btn-primary btn-lg" onclick="showPage('register')">Mulai Sekarang — Gratis</button>
+      <button class="btn btn-outline btn-lg" onclick="showPage('login')">Sudah Punya Akun?</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><strong>10K+</strong><span>Pengguna Aktif</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item"><strong>Rp 2M+</strong><span>Dana Terkelola</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item"><strong>4.9★</strong><span>Rating Pengguna</span></div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="section-header">
+      <h2>Semua yang Kamu Butuhkan</h2>
+      <p>Fitur lengkap untuk mengelola keuangan pribadi secara profesional</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Dashboard Lengkap</h3>
+        <p>Lihat ringkasan keuangan secara real-time dengan grafik yang informatif dan mudah dipahami.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <h3>Catat Transaksi</h3>
+        <p>Catat setiap pemasukan dan pengeluaran dengan kategori yang terorganisir rapi.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Target Tabungan</h3>
+        <p>Tetapkan target finansialmu dan pantau progres pencapaian secara visual.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Pengingat Tagihan</h3>
+        <p>Jangan lewatkan satu pun tagihan dengan sistem pengingat jatuh tempo yang cerdas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📤</div>
+        <h3>Export Data</h3>
+        <p>Ekspor laporan keuanganmu ke format PDF atau Excel kapan saja kamu butuhkan.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <h3>Dark Mode</h3>
+        <p>Tampilan yang nyaman di mata, siang maupun malam dengan dukungan dark mode elegan.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <div class="footer-brand">
+      <span class="brand-icon">💰</span>
+      <span class="brand-name">Smart Finance</span>
+    </div>
+    <p>© 2025 Smart Finance. Dibuat dengan ❤️ untuk pengelolaan keuangan yang lebih baik.</p>
+  </footer>
+</div>
+
+<!-- ===================== REGISTER PAGE ===================== -->
+<div id="page-register" class="page">
+  <div class="auth-layout">
+    <div class="auth-left">
+      <div class="auth-left-content">
+        <div class="auth-brand" onclick="showPage('landing')" style="cursor:pointer">
+          <span class="brand-icon">💰</span>
+          <span class="brand-name">Smart Finance</span>
+        </div>
+        <h2 class="auth-tagline">Mulai perjalanan finansialmu hari ini</h2>
+        <p>Bergabung dengan ribuan pengguna yang sudah mengelola keuangan mereka dengan lebih cerdas.</p>
+        <div class="auth-features">
+          <div class="auth-feature-item"><span>✅</span> Gratis selamanya</div>
+          <div class="auth-feature-item"><span>✅</span> Data tersimpan aman</div>
+          <div class="auth-feature-item"><span>✅</span> Semua fitur lengkap</div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-card">
+        <h2 class="auth-title">Buat Akun Baru</h2>
+        <p class="auth-subtitle">Isi data berikut untuk mendaftar</p>
+        <form id="register-form" onsubmit="handleRegister(event)">
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input type="text" id="reg-name" class="form-input" placeholder="Masukkan nama lengkap" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <div class="input-wrapper">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="reg-email" class="form-input" placeholder="nama@email.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="reg-password" class="form-input" placeholder="Min. 8 karakter" required />
+              <button type="button" class="toggle-pw" onclick="togglePassword('reg-password')">👁️</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Konfirmasi Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="reg-confirm" class="form-input" placeholder="Ulangi password" required />
+              <button type="button" class="toggle-pw" onclick="togglePassword('reg-confirm')">👁️</button>
+            </div>
+          </div>
+          <div id="reg-error" class="form-error hidden"></div>
+          <button type="submit" class="btn btn-primary btn-full btn-lg">Daftar Sekarang</button>
+        </form>
+        <p class="auth-switch">Sudah punya akun? <a href="#" onclick="showPage('login')">Masuk di sini</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LOGIN PAGE ===================== -->
+<div id="page-login" class="page">
+  <div class="auth-layout">
+    <div class="auth-left">
+      <div class="auth-left-content">
+        <div class="auth-brand" onclick="showPage('landing')" style="cursor:pointer">
+          <span class="brand-icon">💰</span>
+          <span class="brand-name">Smart Finance</span>
+        </div>
+        <h2 class="auth-tagline">Selamat datang kembali!</h2>
+        <p>Login untuk mengakses dashboard keuanganmu dan lihat perkembangan terbaru.</p>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-card">
+        <h2 class="auth-title">Masuk ke Akun</h2>
+        <p class="auth-subtitle">Gunakan email dan password yang sudah terdaftar</p>
+        <form id="login-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <div class="input-wrapper">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="login-email" class="form-input" placeholder="nama@email.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="login-password" class="form-input" placeholder="Masukkan password" required />
+              <button type="button" class="toggle-pw" onclick="togglePassword('login-password')">👁️</button>
+            </div>
+          </div>
+          <div class="form-row-between">
+            <label class="checkbox-label">
+              <input type="checkbox" id="remember-me" />
+              <span>Ingat Saya</span>
+            </label>
+            <a href="#" class="forgot-link" onclick="forgotPassword()">Lupa Password?</a>
+          </div>
+          <div id="login-error" class="form-error hidden"></div>
+          <button type="submit" class="btn btn-primary btn-full btn-lg">Masuk</button>
+        </form>
+        <p class="auth-switch">Belum punya akun? <a href="#" onclick="showPage('register')">Daftar gratis</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DASHBOARD ===================== -->
+<div id="page-dashboard" class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <span class="brand-icon">💰</span>
+        <span class="brand-name">Smart Finance</span>
+      </div>
+      <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" onclick="switchTab('overview')" data-tab="overview">
+        <span class="nav-icon">🏠</span><span>Dashboard</span>
+      </a>
+      <a class="nav-item" onclick="switchTab('transactions')" data-tab="transactions">
+        <span class="nav-icon">💳</span><span>Transaksi</span>
+      </a>
+      <a class="nav-item" onclick="switchTab('statistics')" data-tab="statistics">
+        <span class="nav-icon">📊</span><span>Statistik</span>
+      </a>
+      <a class="nav-item" onclick="switchTab('savings')" data-tab="savings">
+        <span class="nav-icon">🎯</span><span>Target Tabungan</span>
+      </a>
+      <a class="nav-item" onclick="switchTab('bills')" data-tab="bills">
+        <span class="nav-icon">🔔</span><span>Pengingat Tagihan</span>
+      </a>
+      <a class="nav-item" onclick="switchTab('categories')" data-tab="categories">
+        <span class="nav-icon">🏷️</span><span>Kategori</span>
+      </a>
+      <a class="nav-item" onclick="switchTab('profile')" data-tab="profile">
+        <span class="nav-icon">👤</span><span>Profil</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <span id="dark-icon">🌙</span>
+        <span id="dark-label">Dark Mode</span>
+      </button>
+      <button class="logout-btn" onclick="handleLogout()">
+        <span>🚪</span><span>Keluar</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <header class="top-bar">
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <div class="top-bar-title" id="top-bar-title">Dashboard</div>
+      <div class="top-bar-actions">
+        <button class="icon-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode"><span id="dark-icon-top">🌙</span></button>
+        <div class="avatar-btn" onclick="switchTab('profile')">
+          <span id="header-avatar">👤</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- TAB: OVERVIEW -->
+    <section id="tab-overview" class="tab-content active">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Selamat Datang, <span id="welcome-name">User</span>! 👋</h1>
+          <p class="page-subtitle" id="current-date-display"></p>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('modal-add-transaction')">
+          + Tambah Transaksi
+        </button>
+      </div>
+
+      <!-- Expense warning banner -->
+      <div id="expense-warning" class="warning-banner hidden">
+        ⚠️ Pengeluaran melebihi pemasukan bulan ini! Perhatikan pengeluaranmu.
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="summary-cards">
+        <div class="summary-card card-balance">
+          <div class="card-label">Total Saldo</div>
+          <div class="card-amount" id="total-balance">Rp 0</div>
+          <div class="card-icon">💰</div>
+        </div>
+        <div class="summary-card card-income">
+          <div class="card-label">Total Pemasukan</div>
+          <div class="card-amount" id="total-income">Rp 0</div>
+          <div class="card-icon">📈</div>
+        </div>
+        <div class="summary-card card-expense">
+          <div class="card-label">Total Pengeluaran</div>
+          <div class="card-amount" id="total-expense">Rp 0</div>
+          <div class="card-icon">📉</div>
+        </div>
+        <div class="summary-card card-net">
+          <div class="card-label">Sisa Uang</div>
+          <div class="card-amount" id="net-amount">Rp 0</div>
+          <div class="card-icon">💎</div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <h2>Transaksi Terbaru</h2>
+          <button class="btn btn-ghost btn-sm" onclick="switchTab('transactions')">Lihat Semua →</button>
+        </div>
+        <div id="recent-transactions-list" class="transaction-list-mini"></div>
+      </div>
+
+      <!-- Quick Mini Chart -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <h2>Ringkasan Bulanan</h2>
+          <button class="btn btn-ghost btn-sm" onclick="switchTab('statistics')">Detail →</button>
+        </div>
+        <div class="mini-chart-wrap">
+          <canvas id="mini-chart" height="120"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: TRANSACTIONS -->
+    <section id="tab-transactions" class="tab-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Riwayat Transaksi</h1>
+          <p class="page-subtitle">Kelola semua transaksi keuanganmu</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-outline btn-sm" onclick="exportPDF()">📄 PDF</button>
+          <button class="btn btn-outline btn-sm" onclick="exportExcel()">📊 Excel</button>
+          <button class="btn btn-primary" onclick="openModal('modal-add-transaction')">+ Tambah</button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters-bar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" class="search-input" placeholder="Cari transaksi..." oninput="filterTransactions()" />
+        </div>
+        <select id="filter-type" class="filter-select" onchange="filterTransactions()">
+          <option value="">Semua Jenis</option>
+          <option value="pemasukan">Pemasukan</option>
+          <option value="pengeluaran">Pengeluaran</option>
+        </select>
+        <select id="filter-category" class="filter-select" onchange="filterTransactions()">
+          <option value="">Semua Kategori</option>
+        </select>
+        <input type="date" id="filter-date-start" class="filter-select" onchange="filterTransactions()" placeholder="Dari tanggal" />
+        <input type="date" id="filter-date-end" class="filter-select" onchange="filterTransactions()" placeholder="Sampai tanggal" />
+        <button class="btn btn-ghost btn-sm" onclick="resetFilters()">Reset</button>
+      </div>
+
+      <div class="section-card">
+        <div class="table-wrap">
+          <table class="data-table" id="transactions-table">
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Kategori</th>
+                <th>Jenis</th>
+                <th>Nominal</th>
+                <th>Keterangan</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="transactions-tbody"></tbody>
+          </table>
+          <div id="no-transactions" class="empty-state hidden">
+            <div class="empty-icon">📭</div>
+            <p>Belum ada transaksi. Tambah transaksi pertamamu!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: STATISTICS -->
+    <section id="tab-statistics" class="tab-content">
+      <div class="page-header">
+        <h1 class="page-title">Statistik Keuangan</h1>
+        <p class="page-subtitle">Analisis mendalam keuanganmu</p>
+      </div>
+      <div class="stats-grid">
+        <div class="section-card">
+          <div class="section-card-header"><h2>Grafik Pemasukan vs Pengeluaran</h2></div>
+          <canvas id="bar-chart" height="220"></canvas>
+        </div>
+        <div class="section-card">
+          <div class="section-card-header"><h2>Distribusi Pengeluaran</h2></div>
+          <canvas id="pie-chart" height="220"></canvas>
+        </div>
+        <div class="section-card chart-full">
+          <div class="section-card-header"><h2>Tren Keuangan Bulanan</h2></div>
+          <canvas id="line-chart" height="160"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: SAVINGS -->
+    <section id="tab-savings" class="tab-content">
+      <div class="page-header">
+        <h1 class="page-title">Target Tabungan</h1>
+        <p class="page-subtitle">Pantau progres tabunganmu</p>
+        <button class="btn btn-primary" onclick="openModal('modal-add-saving')">+ Tambah Target</button>
+      </div>
+      <div id="savings-list" class="savings-grid"></div>
+      <div id="no-savings" class="empty-state hidden">
+        <div class="empty-icon">🎯</div>
+        <p>Belum ada target tabungan. Buat targetmu sekarang!</p>
+      </div>
+    </section>
+
+    <!-- TAB: BILLS -->
+    <section id="tab-bills" class="tab-content">
+      <div class="page-header">
+        <h1 class="page-title">Pengingat Tagihan</h1>
+        <p class="page-subtitle">Jangan sampai lewatkan tagihan</p>
+        <button class="btn btn-primary" onclick="openModal('modal-add-bill')">+ Tambah Tagihan</button>
+      </div>
+      <div id="bills-list" class="bills-grid"></div>
+      <div id="no-bills" class="empty-state hidden">
+        <div class="empty-icon">🔔</div>
+        <p>Belum ada tagihan terdaftar.</p>
+      </div>
+    </section>
+
+    <!-- TAB: CATEGORIES -->
+    <section id="tab-categories" class="tab-content">
+      <div class="page-header">
+        <h1 class="page-title">Kategori Keuangan</h1>
+        <p class="page-subtitle">Kelola kategori transaksimu</p>
+        <button class="btn btn-primary" onclick="openModal('modal-add-category')">+ Tambah Kategori</button>
+      </div>
+      <div id="categories-list" class="categories-grid"></div>
+    </section>
+
+    <!-- TAB: PROFILE -->
+    <section id="tab-profile" class="tab-content">
+      <div class="page-header">
+        <h1 class="page-title">Profil Pengguna</h1>
+      </div>
+      <div class="profile-layout">
+        <div class="profile-card">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar" id="profile-avatar-display">👤</div>
+            <button class="avatar-edit-btn" onclick="changeAvatar()">📷</button>
+          </div>
+          <h2 id="profile-name-display">Nama Pengguna</h2>
+          <p id="profile-email-display">email@example.com</p>
+          <div class="profile-stats">
+            <div class="pstat"><strong id="pstat-transactions">0</strong><span>Transaksi</span></div>
+            <div class="pstat"><strong id="pstat-savings">0</strong><span>Target</span></div>
+            <div class="pstat"><strong id="pstat-bills">0</strong><span>Tagihan</span></div>
+          </div>
+        </div>
+        <div class="profile-form-card">
+          <h3>Edit Profil</h3>
+          <form onsubmit="saveProfile(event)">
+            <div class="form-group">
+              <label class="form-label">Nama Lengkap</label>
+              <input type="text" id="profile-name-input" class="form-input" placeholder="Nama lengkap" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" id="profile-email-input" class="form-input" placeholder="Email" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password Baru (opsional)</label>
+              <input type="password" id="profile-password-input" class="form-input" placeholder="Kosongkan jika tidak ingin ganti" />
+            </div>
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+          </form>
+          <hr class="divider" />
+          <button class="btn btn-danger" onclick="handleLogout()">🚪 Keluar dari Akun</button>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end main-content -->
+</div><!-- end page-dashboard -->
+
+<!-- ===================== MODALS ===================== -->
+
+<!-- Modal Add/Edit Transaction -->
+<div id="modal-add-transaction" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-add-transaction')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-transaction-title">Tambah Transaksi</h3>
+      <button class="modal-close" onclick="closeModal('modal-add-transaction')">✕</button>
+    </div>
+    <form id="transaction-form" onsubmit="saveTransaction(event)">
+      <input type="hidden" id="transaction-id" />
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">Tanggal *</label>
+          <input type="date" id="t-date" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Jenis *</label>
+          <select id="t-type" class="form-input" required>
+            <option value="pemasukan">Pemasukan</option>
+            <option value="pengeluaran">Pengeluaran</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kategori *</label>
+        <select id="t-category" class="form-input" required></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nominal *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">Rp</span>
+          <input type="number" id="t-amount" class="form-input" placeholder="0" min="0" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Keterangan</label>
+        <input type="text" id="t-note" class="form-input" placeholder="Keterangan tambahan (opsional)" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modal-add-transaction')">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Add Saving Goal -->
+<div id="modal-add-saving" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-add-saving')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Tambah Target Tabungan</h3>
+      <button class="modal-close" onclick="closeModal('modal-add-saving')">✕</button>
+    </div>
+    <form onsubmit="saveSavingGoal(event)">
+      <div class="form-group">
+        <label class="form-label">Nama Target *</label>
+        <input type="text" id="s-name" class="form-input" placeholder="cth: Beli Laptop, Liburan, dll" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nominal Target *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">Rp</span>
+          <input type="number" id="s-target" class="form-input" placeholder="0" min="0" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Dana Terkumpul *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">Rp</span>
+          <input type="number" id="s-current" class="form-input" placeholder="0" min="0" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Emoji / Icon</label>
+        <input type="text" id="s-icon" class="form-input" placeholder="🏠 🚗 💻 ✈️ dll" maxlength="2" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modal-add-saving')">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Add Bill -->
+<div id="modal-add-bill" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-add-bill')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Tambah Tagihan</h3>
+      <button class="modal-close" onclick="closeModal('modal-add-bill')">✕</button>
+    </div>
+    <form onsubmit="saveBill(event)">
+      <div class="form-group">
+        <label class="form-label">Nama Tagihan *</label>
+        <input type="text" id="b-name" class="form-input" placeholder="cth: Listrik, Internet, dll" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tanggal Jatuh Tempo *</label>
+        <input type="date" id="b-due" class="form-input" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nominal *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">Rp</span>
+          <input type="number" id="b-amount" class="form-input" placeholder="0" min="0" required />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modal-add-bill')">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Add Category -->
+<div id="modal-add-category" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-add-category')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Tambah Kategori</h3>
+      <button class="modal-close" onclick="closeModal('modal-add-category')">✕</button>
+    </div>
+    <form onsubmit="saveCategory(event)">
+      <div class="form-group">
+        <label class="form-label">Nama Kategori *</label>
+        <input type="text" id="cat-name" class="form-input" placeholder="Nama kategori baru" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Emoji / Icon</label>
+        <input type="text" id="cat-icon" class="form-input" placeholder="🏷️" maxlength="2" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Jenis</label>
+        <select id="cat-type" class="form-input">
+          <option value="both">Semua</option>
+          <option value="pemasukan">Pemasukan</option>
+          <option value="pengeluaran">Pengeluaran</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modal-add-category')">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Edit Saving -->
+<div id="modal-edit-saving" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-edit-saving')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Edit Target Tabungan</h3>
+      <button class="modal-close" onclick="closeModal('modal-edit-saving')">✕</button>
+    </div>
+    <form onsubmit="updateSavingGoal(event)">
+      <input type="hidden" id="es-id" />
+      <div class="form-group">
+        <label class="form-label">Nama Target *</label>
+        <input type="text" id="es-name" class="form-input" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nominal Target *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">Rp</span>
+          <input type="number" id="es-target" class="form-input" min="0" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Dana Terkumpul *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">Rp</span>
+          <input type="number" id="es-current" class="form-input" min="0" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Emoji / Icon</label>
+        <input type="text" id="es-icon" class="form-input" maxlength="2" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modal-edit-saving')">Batal</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
